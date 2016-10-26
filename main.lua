@@ -1,15 +1,13 @@
+require "Player"
+
 function love.load()
-  init()
+  Player.init()
 end
 
 function love.draw()
-  
+  Player.draw()
 end
 
 function love.update(dt)
   
-end
-
-function init()
-
 end
