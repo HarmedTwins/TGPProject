@@ -1,19 +1,20 @@
 require "Player"
-require "Colliders"
+require "Level"
 
 function love.load()
-  Colliders.init()
+  Level.init()
   Player.init()
 end
 
 function love.draw()
-  Colliders.draw()
-  Player.draw()
-  
+  love.graphics.setColor(255, 255, 255)
   love.graphics.print(string.format("X: %.2f, Y: %.2f", Player.x, Player.y))
+  
+  Level.draw()
+  Player.draw()
 end
 
 function love.update(dt)
-  Colliders.update(dt)
+  Level.update(dt)
   Player.update(dt)
 end

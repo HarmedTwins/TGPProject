@@ -1,6 +1,7 @@
-module("Colliders", package.seeall)
+module("Level", package.seeall)
 
 function init()
+  LevelMap = {}
   
 end
 
