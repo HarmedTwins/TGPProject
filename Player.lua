@@ -1,56 +1,100 @@
 module("Player", package.seeall)
+require("Level")
 
 function init()
-  player = {}
-  player.x = 30
-  player.y = 30
-  player.width = 10
-  player.height = 30
-  player.baseWidth = 10
-  player.baseHeight = 30
   
-  jumpKey = "up"
+  x = 100
+  y = 100
+  width = 20
+  height = 60
+  baseWidth = width
+  baseHeight = height
+  velocity = 0
+  
+  x = x - (baseWidth - baseHeight)/2
+  y = y - baseHeight + baseWidth
+  
+  jumpKey = false
   jumpKeyHeld = false
-  slideKey = "down"
+  slideKey = false
   slideKeyHeld = false
-  
 end
 
 function draw()
+  love.graphics.setColor(255, 0, 0)
+  love.graphics.rectangle("fill",0, 300, 700, 700)
+  
   love.graphics.setColor(255, 255, 255)
-  love.graphics.rectangle("fill", player.x + player.width/2, player.y +player.height/2, player.width, player.height, 1, 1, player.width, player.height)
+  love.graphics.rectangle("fill", x, y, width, height)
+  
 end
 
 function update(dt)
-  if love.keyboard.isDown(jumpKey) and not(jumpKeyHeld) then
-    player.y = player.y + 10
-    
-    jumpKeyHeld = true
+  if love.mouse.isDown(1) then
+    handleTouch(love.mouse.getY())
+  else
+    jumpKey = false
+    slideKey = false
   end
   
-  if love.keyboard.isDown(slideKey) and not(slideKeyHeld) then
-    player.x = player.x - player.baseWidth*2
-    player.y = player.y + player.baseHeight
+  if jumpKey and not(jumpKeyHeld) then
+    velocity = -800
+    y = y + velocity * dt
+    jumpKeyHeld = true
+  else
+    if velocity < 1000 then
+      velocity = velocity + 50
+    else
+      velocity = 1000
+    end
+  end
+  
+  if slideKey and not(slideKeyHeld) then
+    x = x + (baseWidth - height)/2
+    y = y + baseHeight - baseWidth
     
-    player.width = player.baseHeight
-    player.height = player.baseWidth
+    width = baseHeight
+    height = baseWidth
     
     slideKeyHeld = true
   end
   
-  if not(love.keyboard.isDown(jumpKey)) then
-    jumpKeyHeld = false
-  end
-  
-  if not(love.keyboard.isDown(slideKey)) then
+  if not(slideKey) then
     if slideKeyHeld then
-      player.x = player.x + player.baseWidth*2
-      player.y = player.y - player.baseHeight
+      x = x - (baseWidth - baseHeight)/2
+      y = y - baseHeight + baseWidth
     end
     
-    player.width = player.baseWidth
-    player.height = player.baseHeight
+    width = baseWidth
+    height = baseHeight
     
     slideKeyHeld = false
   end
+  
+  if not(CheckCollision(x, y, width, height, 0, 300, 700, 700)) then
+    y = y + velocity * dt
+  else
+    i = 1
+    while CheckCollision(x, y - i, width, height, 0, 300, 700, 700) do
+      i = i + 1
+    end
+    y = y - i + 1
+    
+    jumpKeyHeld = false
+  end
+end
+
+function handleTouch(pos)
+  if pos < 720/4 then
+    jumpKey = true
+  else
+    slideKey = true
+  end
+end
+
+function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
+  return x1 < x2+w2 and
+         x2 < x1+w1 and
+         y1 < y2+h2 and
+         y2 < y1+h1
 end
