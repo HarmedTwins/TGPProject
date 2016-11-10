@@ -2,7 +2,6 @@ module("Player", package.seeall)
 require("Level")
 
 function init()
-  
   x = 100
   y = 100
   width = 20
@@ -21,8 +20,8 @@ function init()
 end
 
 function draw()
-  love.graphics.setColor(255, 0, 0)
-  love.graphics.rectangle("fill",0, 300, 700, 700)
+  --love.graphics.setColor(255, 0, 0)
+  --love.graphics.rectangle("fill",0, 300, 700, 700)
   
   love.graphics.setColor(255, 255, 255)
   love.graphics.rectangle("fill", x, y, width, height)
