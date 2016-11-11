@@ -42,7 +42,7 @@ function update(dt)
     jumpKeyHeld = true
   else
     if velocity < 1000 then
-      velocity = velocity + 50
+      velocity = velocity + 2500 * dt
     else
       velocity = 1000
     end
@@ -70,7 +70,19 @@ function update(dt)
     slideKeyHeld = false
   end
   
-  if not(CheckCollision(x, y, width, height, 0, 300, 700, 700)) then
+  y = y + velocity * dt
+  for i,v in ipairs(Level.Colliders) do
+    if v.x < x + 32 then
+      if y+height+1 >= v.y then
+        jumpKeyHeld = false
+      end
+      if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
+        y = v.y - height
+      end
+    end
+  end
+  
+  --[[if not(CheckCollision(x, y, width, height, 0, 300, 700, 700)) then
     y = y + velocity * dt
   else
     i = 1
@@ -80,7 +92,7 @@ function update(dt)
     y = y - i + 1
     
     jumpKeyHeld = false
-  end
+  end]]--
 end
 
 function handleTouch(pos)
