@@ -25,7 +25,6 @@ function draw()
   
   love.graphics.setColor(255, 255, 255)
   love.graphics.rectangle("fill", x, y, width, height)
-  
 end
 
 function update(dt)
@@ -71,13 +70,21 @@ function update(dt)
   end
   
   y = y + velocity * dt
-  for i,v in ipairs(Level.Colliders) do
-    if v.x < x + 32 then
-      if y+height+1 >= v.y then
-        jumpKeyHeld = false
-      end
-      if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
-        y = v.y - height
+  for i,w in ipairs(Level.Colliders) do
+    for j, v in ipairs(Level.Colliders[i]) do
+      if not(v == "null") then 
+       if v.x < x + 32 and x < v.x+v.width  then
+          if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
+            if v.lethal then
+              --Restart (TODO)
+              x = v.x - width
+            else
+              y = v.y - height
+              velocity = 0
+              jumpKeyHeld = false
+            end
+          end
+        end
       end
     end
   end
@@ -98,6 +105,7 @@ end
 function handleTouch(pos)
   if pos < 720/4 then
     jumpKey = true
+    slideKey = false
   else
     slideKey = true
   end
