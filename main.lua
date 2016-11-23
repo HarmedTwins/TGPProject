@@ -5,16 +5,17 @@ require "Menu"
 require "Sound"
 
 function love.load()
+  gamestate = 1
   Level.init()
   Player.init()
   Menu.load()
-  
-  gamestate = 1
+  Sound.load()
 end
 
 function love.draw()
   love.graphics.setColor(255, 255, 255)
   love.graphics.print(string.format("X: %.2f, Y: %.2f", Player.x, Player.y))
+  Sound.draw()
   Menu.draw()
   if gamestate == 2 then
     Level.draw()
@@ -35,5 +36,6 @@ function love.mousepressed(mx, my, button)
      and my >= 0 and my < 360
      and gamestate == 1 then
      gamestate = 2
+     Player.jumpKeyHeld = true
   end
 end
