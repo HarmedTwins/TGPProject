@@ -31,10 +31,10 @@ function init()
         Colliders[i][j] = tempWall
         if Colliders[i][j-1] == "null" then
           local tempWall = {}
-          tempWall.x = (j-1)*32 
-          tempWall.y = (i-1)*32
-          tempWall.width = 2
-          tempWall.height = 32
+          tempWall.x = (j-1)*32 - 1
+          tempWall.y = (i-1)*32 + 9
+          tempWall.width = 1
+          tempWall.height = 23
           tempWall.draw = false
           tempWall.lethal = true
           Colliders[i][j-1] = tempWall
