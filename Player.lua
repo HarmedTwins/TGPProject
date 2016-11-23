@@ -1,5 +1,6 @@
 module("Player", package.seeall)
 require("Level")
+require("main")
 
 function init()
   x = 100
@@ -77,7 +78,8 @@ function update(dt)
           if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
             if v.lethal then
               --Restart (TODO)
-              x = v.x - width
+              main.gamestate = 3
+              --x = v.x - width
             else
               y = v.y - height
               velocity = 0
