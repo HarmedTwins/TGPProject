@@ -2,6 +2,7 @@ module("main", package.seeall)
 require "Player"
 require "Level"
 require "Menu"
+require "Sound"
 
 function love.load()
   Level.init()
