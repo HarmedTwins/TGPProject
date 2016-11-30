@@ -24,7 +24,6 @@ function init()
     Colliders[i] = {}
     --print(v[i].tile)
     for j,w in ipairs(LevelMap[i]) do
-      print(w)
       if w == "X" then
         local tempWall = {}
         tempWall.x = (j-2)*32
