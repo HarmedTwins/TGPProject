@@ -38,4 +38,24 @@ function love.mousepressed(mx, my, button)
      gamestate = 2
      Player.jumpKeyHeld = true
   end
+  
+  if button == 1
+     and mx >= 100 and mx < 171
+     and my >= 120 and my < 193
+     and gamestate == 3 then
+     Player.init()
+     Level.init()
+     gamestate = 2
+     Player.jumpKeyHeld = true
+  end
+  
+  if button == 1
+     and mx >= 500 and mx < 571
+     and my >= 120 and my < 193
+     and gamestate == 3 then
+     Player.init()
+     Level.init()
+     gamestate = 1
+     Player.jumpKeyHeld = true
+  end
 end

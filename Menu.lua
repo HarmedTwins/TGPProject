@@ -5,6 +5,8 @@ function load()
   backgroundQuad = love.graphics.newQuad(1,1,640,360,640,360)
   menubg = love.graphics.newImage("assets/menubg.png")
   deathbg = love.graphics.newImage("assets/deathbg.png")
+  replaybutton = love.graphics.newImage("assets/replaybutton.png")
+  homebutton = love.graphics.newImage("assets/homebutton.png")
 end
 
 function draw()
@@ -15,6 +17,8 @@ function draw()
 
   if main.gamestate == 3 then
   love.graphics.draw(deathbg, backgroundQuad, 0, 0)
+  love.graphics.draw(replaybutton, 100, 120)
+  love.graphics.draw(homebutton, 500, 120)
   end 
 
 end   
