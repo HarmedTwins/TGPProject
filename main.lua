@@ -6,6 +6,7 @@ require "Sound"
 
 function love.load()
   gamestate = 1
+  coins = 0
   Level.init()
   Player.init()
   Menu.load()
