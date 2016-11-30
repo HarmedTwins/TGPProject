@@ -6,6 +6,7 @@ require "Sound"
 
 function love.load()
   gamestate = 1
+  coins = 0
   Level.init()
   Player.init()
   Menu.load()
@@ -36,6 +37,26 @@ function love.mousepressed(mx, my, button)
      and my >= 0 and my < 360
      and gamestate == 1 then
      gamestate = 2
+     Player.jumpKeyHeld = true
+  end
+  
+  if button == 1
+     and mx >= 100 and mx < 171
+     and my >= 120 and my < 193
+     and gamestate == 3 then
+     Player.init()
+     Level.init()
+     gamestate = 2
+     Player.jumpKeyHeld = true
+  end
+  
+  if button == 1
+     and mx >= 500 and mx < 571
+     and my >= 120 and my < 193
+     and gamestate == 3 then
+     Player.init()
+     Level.init()
+     gamestate = 1
      Player.jumpKeyHeld = true
   end
 end
