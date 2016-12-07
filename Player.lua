@@ -114,6 +114,11 @@ end
               if v.x < x then
                 v.active = true
               end
+            else if v.character == "E" then
+              if v.x < x then
+                main.gamestate = 3
+              end
+            end
             end
           else if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
             if v.lethal then
