@@ -1,5 +1,9 @@
 module("Level", package.seeall)
 
+function load()
+ dirt = love.graphics.newImage("assets/dirt.png")
+end
+
 function init()
   file = io.open("level.txt", "r")
   LevelMap = {}
@@ -66,8 +70,7 @@ function draw()
     rowsUsed = rowsUsed + 1
     for j,w in ipairs(Colliders[i]) do
       if not(w == "null") and w.draw then
-        love.graphics.setColor(255, 0, 0)
-        love.graphics.rectangle("fill", w.x, w.y, w.width, w.height)
+        love.graphics.draw(dirt, w.x, w.y)
       end
     end
   end

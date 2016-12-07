@@ -8,7 +8,9 @@ function love.load()
   gamestate = 1
   coins = 0
   Level.init()
+  Level.load()
   Player.init()
+  Player.load()
   Menu.load()
   Sound.load()
 end
