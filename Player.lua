@@ -64,6 +64,10 @@ end
     slideKey = false
   end
   
+  if love.keyboard.isDown("a") then
+    Level.loadLevel("level2.txt")
+  end
+  
   if jumpKey and not(jumpKeyHeld) then
     velocity = -800
     y = y + velocity * dt
