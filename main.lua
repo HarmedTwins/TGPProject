@@ -17,7 +17,6 @@ end
 
 function love.draw()
   love.graphics.setColor(255, 255, 255)
-  love.graphics.print(string.format("X: %.2f, Y: %.2f", Player.x, Player.y))
   Sound.draw()
   Menu.draw()
   if gamestate == 2 then
