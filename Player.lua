@@ -20,7 +20,7 @@ function load()
 end
 
 function init() 
-  x = 200
+  x = 120
   y = 200
   width = 20
   height = 60
@@ -35,10 +35,14 @@ function init()
   jumpKeyHeld = false
   slideKey = false
   slideKeyHeld = false
+  
 end
 
 function draw()
-  love.graphics.draw(red,activeSprite, x, y)
+  --love.graphics.setColor(255, 255, 255)
+  --love.graphics.draw(red,activeSprite, x - 71*3, y + 56*4)
+  love.graphics.setColor(255, 0, 0)
+  love.graphics.rectangle("fill", x, y, width, height)
 end
 
 function update(dt)
@@ -95,20 +99,28 @@ end
   end
   
   onFloor = false
-  
+ 
   y = y + velocity * dt
   for i,w in ipairs(Level.Colliders) do
     for j, v in ipairs(Level.Colliders[i]) do
       if not(v == "null") then 
        if v.x < x + 32 and x < v.x+v.width  then
-          if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
+          if v.special then
+            if v.character == "C" then
+              if v.x < x then
+                v.active = true
+              end
+            end
+          else if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
             if v.lethal then
-              main.gamestate = 3
+              GoToCheckpoint()
             else
               y = v.y - height
               velocity = 0
               onFloor = true
             end
+          end
+          
           end
         end
       end
@@ -117,6 +129,18 @@ end
   
   jumpKeyHeld = not(onFloor)
   
+end
+
+function GoToCheckpoint()
+  tempX = 0;
+  for i,w in ipairs(Level.Colliders) do
+    for j, v in ipairs(Level.Colliders[i]) do
+      if not(v == "null") and v.special and v.character == "C" and v.active then
+        tempX = v.x
+      end
+    end
+  end
+  Level.moveWorld(tempX - x)
 end
 
 function handleTouch(pos)
@@ -154,3 +178,4 @@ function CanStand()
   
   return canStand
 end
+
