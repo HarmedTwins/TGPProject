@@ -36,11 +36,6 @@ function init()
   slideKey = false
   slideKeyHeld = false
   
-  lastCheckpoint = {}
-  lastCheckpoint.x = 100
-  lastCheckpoint.y = 100
-  
-  tempX=0
 end
 
 function draw()
@@ -104,7 +99,7 @@ end
   end
   
   onFloor = false
-  
+ 
   y = y + velocity * dt
   for i,w in ipairs(Level.Colliders) do
     for j, v in ipairs(Level.Colliders[i]) do
@@ -145,7 +140,6 @@ function GoToCheckpoint()
       end
     end
   end
-  
   Level.moveWorld(tempX - x)
 end
 

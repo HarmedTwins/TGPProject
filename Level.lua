@@ -66,7 +66,7 @@ function init()
       end
     end
   end
-end
+  end
 
   for i,w in ipairs(Level.Colliders) do
     for j, v in ipairs(Level.Colliders[i]) do
@@ -93,7 +93,6 @@ function moveWorld(shift)
     for j,w in ipairs(Colliders[i]) do
       if not(w == "null") then
         w.x = w.x - shift
-        --w.x = j*32
       end
     end
   end
@@ -102,7 +101,6 @@ end
 function draw()
   rowsUsed = 0
   for i,v in ipairs(Colliders) do
-    rowsUsed = rowsUsed + 1
     for j,w in ipairs(Colliders[i]) do
       if not(w == "null") and w.draw then
         love.graphics.draw(dirt, w.x, w.y)
