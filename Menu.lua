@@ -54,23 +54,23 @@ function draw()
   
   love.graphics.print("Level 1:", 20, 70)
   love.graphics.print(main.level1coins, 160, 70)
-  love.graphics.print("/10", 185, 70)
+  love.graphics.print(string.format("/%s",main.level1MaxCoins), 185, 70)
   
   love.graphics.print("Level 2:", 20, 110)
   love.graphics.print(main.level2coins, 160, 110)
-  love.graphics.print("/10", 185, 110)
+  love.graphics.print(string.format("/%s",main.level2MaxCoins), 185, 110)
   
   love.graphics.print("Level 3:", 20, 150)
   love.graphics.print(main.level3coins, 160, 150)
-  love.graphics.print("/10", 185, 150)
+  love.graphics.print(string.format("/%s",main.level3MaxCoins), 185, 150)
   
   love.graphics.print("Level 4:", 20, 190)
   love.graphics.print(main.level4coins, 160, 190)
-  love.graphics.print("/10", 185, 190)
+  love.graphics.print(string.format("/%s",main.level4MaxCoins), 185, 190)
   
   love.graphics.print("Level 5:", 20, 230)
   love.graphics.print(main.level5coins, 160, 230)
-  love.graphics.print("/10", 185, 230)
+  love.graphics.print(string.format("/%s",main.level5MaxCoins), 185, 230)
   
   
   love.graphics.setColor(255, 255, 255, 255)
@@ -139,7 +139,22 @@ function draw()
   love.graphics.print("complete!", 310, 30)
   
   love.graphics.print(main.currentcoins, 290, 100)
-  love.graphics.print("/10", 320, 100)
+  
+  if main.levelstate == 1 then
+    love.graphics.print(string.format("/%s",main.level1MaxCoins), 320, 100)
+  else if main.levelstate == 2 then
+    love.graphics.print(string.format("/%s",main.level2MaxCoins), 320, 100)
+  else if main.levelstate == 3 then
+    love.graphics.print(string.format("/%s",main.level3MaxCoins), 320, 100)
+  else if main.levelstate == 4 then
+    love.graphics.print(string.format("/%s",main.level4MaxCoins), 320, 100)
+  else if main.levelstate == 5 then
+    love.graphics.print(string.format("/%s",main.level5MaxCoins), 320, 100)
+  end
+  end
+  end
+  end
+  end
   
   love.graphics.setColor(255, 255, 255, 255)
   love.graphics.draw(coin, 245, 107)

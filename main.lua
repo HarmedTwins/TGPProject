@@ -14,8 +14,14 @@ function love.load()
   level3coins = 0
   level4coins = 0
   level5coins = 0
+  level1MaxCoins = "??"
+  level2MaxCoins = "??"
+  level3MaxCoins = "??"
+  level4MaxCoins = "??"
+  level5MaxCoins = "??"
   
-  level2unlocked = false
+  
+  level2unlocked = true
   level3unlocked = false
   level4unlocked = false
   level5unlocked = false
@@ -83,7 +89,7 @@ function love.mousepressed(mx, my, button)
      Player.init()
      Level.init()
      gamestate = 3
-     Sound.play()
+     Sound.play() 
      Player.jumpKeyHeld = true
   end
   
