@@ -2,10 +2,32 @@ module("Level", package.seeall)
 
 function load()
  dirt = love.graphics.newImage("assets/dirt.png")
+ grass = love.graphics.newImage("assets/grass.png")
+ ice = love.graphics.newImage("assets/ice.png")
+ snow = love.graphics.newImage("assets/snow.png")
+ desert = love.graphics.newImage("assets/desert.png")
+ sand = love.graphics.newImage("assets/sand.png")
+ nether = love.graphics.newImage("assets/nether.png")
+ goop = love.graphics.newImage("assets/goop.png")
 end
 
 function init()
-  loadLevel("level.txt")
+  
+  if main.levelstate == 1 then
+  loadLevel("level1.txt")
+  end
+  if main.levelstate == 2 then
+  loadLevel("level2.txt")
+  end
+  if main.levelstate == 3 then
+  loadLevel("level3.txt")
+  end
+  if main.levelstate == 4 then
+  loadLevel("level4.txt")
+  end
+  if main.levelstate == 5 then
+  loadLevel("level5.txt")
+  end
 end
 
 function loadLevel(level)
@@ -126,10 +148,32 @@ function draw()
           love.graphics.setColor(255, 255, 255)
           if w.top then
             --draw other
-            love.graphics.draw(dirt, w.x, w.y)
+            if main.levelstate == 1 or 3 then
+            love.graphics.draw(grass, w.x, w.y)
+            end
+            if main.levelstate == 2 then
+            love.graphics.draw(snow, w.x, w.y)
+            end
+            if main.levelstate == 4 then
+            love.graphics.draw(sand, w.x, w.y)
+            end
+            if main.levelstate == 5 then
+            love.graphics.draw(goop, w.x, w.y)
+            end
           else
+            if main.levelstate == 1 or 3 then
             love.graphics.draw(dirt, w.x, w.y)
-          end
+            end
+            if main.levelstate == 2 then
+            love.graphics.draw(ice, w.x, w.y)
+            end
+            if main.levelstate == 4 then
+            love.graphics.draw(desert, w.x, w.y)
+            end
+            if main.levelstate == 5 then
+            love.graphics.draw(nether, w.x, w.y)
+            end
+          end   
         end
       end
     end
