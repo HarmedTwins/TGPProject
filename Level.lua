@@ -31,6 +31,7 @@ function init()
 end
 
 function loadLevel(level)
+  main.currentcoins = 0
   file = io.open(level, "r")
   LevelMap = {}
   while true do
@@ -49,7 +50,7 @@ function loadLevel(level)
   end
   
   Colliders = {}
-  
+  maxCoins = 0
  for i,v in ipairs(LevelMap) do
     Colliders[i] = {}
     --print(v[i].tile)
@@ -63,6 +64,12 @@ function loadLevel(level)
         tempWall.draw = true
         tempWall.special = false
         tempWall.lethal = false
+        tempWall.top = false
+        if i ~= 0 then
+          if Colliders[i-1][j] == "null" or (Colliders[i-1][j] ~= nil and Colliders[i-1][j].special) or (Colliders[i-1][j] ~= nil and Colliders[i-1][j].lethal) then
+            tempWall.top = true
+          end
+        end
         Colliders[i][j] = tempWall
         if Colliders[i][j-1] == "null" then
           local tempWall = {}
@@ -98,6 +105,19 @@ function loadLevel(level)
         checkpoint.character = "E"
         checkpoint.lethal = false
         Colliders[i][j] = checkpoint
+      else if w == "M" or w == "m" then
+        maxCoins = maxCoins + 1
+        local tempWall = {}
+        tempWall.x = (j-2)*32
+        tempWall.y = (i-1)*32
+        tempWall.width = 32
+        tempWall.height = 32
+        tempWall.draw = true
+        tempWall.special = true
+        tempWall.character = "M"
+        tempWall.lethal = false
+        tempWall.active = true
+        Colliders[i][j] = tempWall
       else
         Colliders[i][j] = "null"
       end
@@ -105,7 +125,26 @@ function loadLevel(level)
   end
 end
 end
-
+end
+  
+  if main.levelstate == 1 then
+    main.level1MaxCoins = maxCoins
+  else if main.levelstate == 2 then
+    main.level2MaxCoins = maxCoins
+  else if main.levelstate == 3 then
+    main.level3MaxCoins = maxCoins
+  else if main.levelstate == 4 then
+    main.level4MaxCoins = maxCoins
+  else if main.levelstate == 5 then
+    main.level5MaxCoins = maxCoins
+  end
+  end
+  end
+  end
+  end
+  
+  
+  
   for i,w in ipairs(Level.Colliders) do
     for j, v in ipairs(Level.Colliders[i]) do
       if not(v == "null") and v.special and v.character == "C" then
@@ -142,13 +181,18 @@ function draw()
     for j,w in ipairs(Colliders[i]) do
       if not(w == "null") and w.draw then
         if w.special then
+          if w.character == "M" or w.character == "m" then
+          love.graphics.setColor(255, 255, 255)
+          love.graphics.draw(Menu.coin, w.x, w.y)
+          else 
           love.graphics.setColor(0, 255, 0)
           love.graphics.rectangle("fill", w.x, w.y, w.width, w.height)
+          end
         else
           love.graphics.setColor(255, 255, 255)
           if w.top then
             --draw other
-            if main.levelstate == 1 or 3 then
+            if main.levelstate == 1 or main.levelstate == 3 then
             love.graphics.draw(grass, w.x, w.y)
             end
             if main.levelstate == 2 then
@@ -161,7 +205,7 @@ function draw()
             love.graphics.draw(goop, w.x, w.y)
             end
           else
-            if main.levelstate == 1 or 3 then
+            if main.levelstate == 1 or main.levelstate == 3 then
             love.graphics.draw(dirt, w.x, w.y)
             end
             if main.levelstate == 2 then

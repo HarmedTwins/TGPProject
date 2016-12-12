@@ -8,20 +8,11 @@ local currentSprite = 1
 local elapsedTime = 0
 
 function load()
-  red = love.graphics.newImage("assets/red.png")
-  redSprites[1] = love.graphics.newQuad(0,0,101,108, red:getDimensions()) -- running animation
-  redSprites[2] = love.graphics.newQuad(101,0,210,108, red:getDimensions())
-  redSprites[3] = love.graphics.newQuad(210,0,321,108, red:getDimensions())
-  redSprites[4] = love.graphics.newQuad(321,0,429,108, red:getDimensions())
-  redSprites[5] = love.graphics.newQuad(429,0,540,108, red:getDimensions())
-  redSprites[6] = love.graphics.newQuad(0,113,136,217, red:getDimensions()) -- jumping
-  redSprites[7] = love.graphics.newQuad(136,113,208,217, red:getDimensions()) -- sliding
-  activeSprite = redSprites[currentSprite]
 end
 
 function init() 
   x = 120
-  y = 200
+  y = 0
   width = 20
   height = 60
   baseWidth = width
@@ -46,17 +37,6 @@ function draw()
 end
 
 function update(dt)
-  elapsedTime = elapsedTime + dt
-  if elapsedTime > 0.2 then
-    if currentSprite < 5 then
-    currentSprite = currentSprite + 1
-    else
-    currentSprite = 1
-  end
-  activeSprite = redSprites[currentSprite]
-  elapsedTime = 0
-end  
-
   if love.mouse.isDown(1) then
     handleTouch(love.mouse.getY())
   else
@@ -105,46 +85,67 @@ end
   onFloor = false
  
   y = y + velocity * dt
+  if y > 360+height then
+  GoToCheckpoint()
+  end
   for i,w in ipairs(Level.Colliders) do
     for j, v in ipairs(Level.Colliders[i]) do
       if not(v == "null") then 
-       if v.x < x + 32 and x < v.x+v.width  then
+       if v.x < x + 64 and x < v.x+v.width*2  then
           if v.special then
             if v.character == "C" then
               if v.x < x then
                 v.active = true
-              end
+              end      
+            else if v.character == "M" and v.active then
+                if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
+                  v.draw = false
+                  v.active = false
+                  main.currentcoins = main.currentcoins + 1
+                end  
+            
             else if v.character == "E" then
               if v.x < x and main.levelstate == 1 then
-                main.level1coins = main.currentcoins
+                if main.currentcoins > main.level1coins then
+                  main.level1coins = main.currentcoins
+                end
                 main.level2unlocked = true
                 main.gamestate = 4
                 Sound.play()
               end
               if v.x < x and main.levelstate == 2 then
-                main.level2coins = main.currentcoins
+                if main.currentcoins > main.level2coins then
+                  main.level2coins = main.currentcoins
+                end  
                 main.level3unlocked = true
                 main.gamestate = 4
                 Sound.play()
               end
               if v.x < x and main.levelstate == 3 then
-                main.level3coins = main.currentcoins
+                if main.currentcoins > main.level3coins then
+                  main.level3coins = main.currentcoins
+                end  
                 main.level4unlocked = true
                 main.gamestate = 4
                 Sound.play()
               end
               if v.x < x and main.levelstate == 4 then
-                main.level4coins = main.currentcoins
+                if main.currentcoins > main.level4coins then
+                  main.level4coins = main.currentcoins
+                end  
                 main.level5unlocked = true
                 main.gamestate = 4
                 Sound.play()
               end
               if v.x < x and main.levelstate == 5 then
-                main.level5coins = main.currentcoins
+                if main.currentcoins > main.level5coins then
+                  main.level5coins = main.currentcoins
+                end
                 main.gamestate = 4
                 Sound.play()
               end
-              end
+            end
+            end
             end
           else if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
             if v.lethal then
@@ -175,7 +176,8 @@ function GoToCheckpoint()
       end
     end
   end
-  Level.moveWorld(tempX - x)
+  Level.moveWorld(tempX - x - 30)
+  y = 0
 end
 
 function handleTouch(pos)
