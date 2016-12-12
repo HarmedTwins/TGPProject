@@ -64,9 +64,9 @@ end
     slideKey = false
   end
   
-  if love.keyboard.isDown("a") then
-    Level.loadLevel("level2.txt")
-  end
+  if jumpKey and not(jumpKeyHeld) then
+    Sound.playjump()
+  end  
   
   if jumpKey and not(jumpKeyHeld) then
     velocity = -800
@@ -115,10 +115,36 @@ end
                 v.active = true
               end
             else if v.character == "E" then
-              if v.x < x then
-                main.gamestate = 3
+              if v.x < x and main.levelstate == 1 then
+                main.level1coins = main.currentcoins
+                main.level2unlocked = true
+                main.gamestate = 4
+                Sound.play()
               end
-            end
+              if v.x < x and main.levelstate == 2 then
+                main.level2coins = main.currentcoins
+                main.level3unlocked = true
+                main.gamestate = 4
+                Sound.play()
+              end
+              if v.x < x and main.levelstate == 3 then
+                main.level3coins = main.currentcoins
+                main.level4unlocked = true
+                main.gamestate = 4
+                Sound.play()
+              end
+              if v.x < x and main.levelstate == 4 then
+                main.level4coins = main.currentcoins
+                main.level5unlocked = true
+                main.gamestate = 4
+                Sound.play()
+              end
+              if v.x < x and main.levelstate == 5 then
+                main.level5coins = main.currentcoins
+                main.gamestate = 4
+                Sound.play()
+              end
+              end
             end
           else if CheckCollision(x, y, width, height, v.x, v.y, v.width, v.height) then
             if v.lethal then
