@@ -21,10 +21,10 @@ function love.load()
   level5MaxCoins = "??"
   
   
-  level2unlocked = true
-  level3unlocked = false
-  level4unlocked = false
-  level5unlocked = false
+  level2unlocked = false 
+  level3unlocked = false 
+  level4unlocked = false 
+  level5unlocked = false 
   
   Level.init()
   Level.load()
@@ -53,20 +53,28 @@ end
 
 function love.mousepressed(mx, my, button)
   if button == 1
-     and mx >= 230 and mx < 302 --play button
+    and mx >= 150 and mx < 222 --info button
+    and my >= 170 and my < 242
+    and gamestate == 1 then
+    Sound.playmenuselect()  
+    gamestate = 5 
+  end
+  
+  if button == 1
+     and mx >= 240 and mx < 312 --play button
      and my >= 170 and my < 242
      and gamestate == 1 then
-     Sound.playmenuselect()  
-     Player.init()
-     Level.init()
+     Sound.playmenuselect()
      levelstate = 1
+     Player.init()
+     Level.init() 
      gamestate = 3
      Sound.play()
      Player.jumpKeyHeld = true
   end
   
   if button == 1
-    and mx >= 340 and mx < 412 --level select button
+    and mx >= 330 and mx < 402 --level select button
     and my >= 170 and my < 242
     and gamestate == 1 then
     Sound.playmenuselect()
@@ -74,11 +82,41 @@ function love.mousepressed(mx, my, button)
   end
   
   if button == 1
-    and mx >= 20 and mx < 188 --return to menu button
+    and mx >= 420 and mx < 492 --volume button
+    and my >= 170 and my < 242
+    and gamestate == 1 then
+    if Sound.sound then
+      Sound.sound = false
+      Sound.play()
+    else
+      Sound.sound = true
+      Sound.play()
+    end  
+  end
+  
+  if button == 1
+    and mx >= 20 and mx < 188 --level select return to menu button
     and my >= 270 and my < 342
     and gamestate == 2 then
     Sound.playmenuselect()  
     gamestate = 1
+  end
+  
+   if button == 1
+    and mx >= 20 and mx < 188 --info return to menu button
+    and my >= 270 and my < 342
+    and gamestate == 5 then
+    Sound.playmenuselect()  
+    gamestate = 1
+  end
+  
+  if button == 1
+    and mx >= 270 and mx < 354 --in game menu button
+    and my >= 10 and my < 46
+    and gamestate == 3 then
+    Sound.playmenuselect()  
+    gamestate = 1
+    Sound.play()
   end
   
   if button == 1

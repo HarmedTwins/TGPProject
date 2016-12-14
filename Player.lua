@@ -102,6 +102,7 @@ function update(dt)
                   v.draw = false
                   v.active = false
                   main.currentcoins = main.currentcoins + 1
+                  Sound.playcoin()
                 end  
             
             else if v.character == "E" then

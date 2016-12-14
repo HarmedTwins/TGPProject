@@ -16,6 +16,10 @@ function load()
   replaybutton = love.graphics.newImage("assets/replaybutton.png")
   menubutton = love.graphics.newImage("assets/menubutton.png")
   nextlevelbutton = love.graphics.newImage("assets/nextlevelbutton.png")
+  levelmenubutton = love.graphics.newImage("assets/levelmenubutton.png")
+  infobutton = love.graphics.newImage("assets/infobutton.png")
+  volumebuttonon = love.graphics.newImage("assets/volumebuttonon.png")
+  volumebuttonoff = love.graphics.newImage("assets/volumebuttonoff.png")
 
   locked = love.graphics.newImage("assets/locked.png")
   unlocked = love.graphics.newImage("assets/unlocked.png")
@@ -23,6 +27,7 @@ function load()
   coins = love.graphics.newFont("assets/font.ttf", 20)
   title = love.graphics.newFont("assets/font.ttf", 55)
   level = love.graphics.newFont("assets/font.ttf", 40)
+  info = love.graphics.newFont("assets/font.ttf", 25)
   
   lvl1coins = main.level1coins
   lvl2coins = main.level2coins
@@ -39,9 +44,16 @@ function draw()
   love.graphics.setFont(title)
   love.graphics.setColor(255, 0, 0, 255)
   love.graphics.print("Red's Run", 210, 50)
+  love.graphics.rectangle("fill", 70, 160, 40, 120)
   love.graphics.setColor(255, 255, 255, 255)
-  love.graphics.draw(playbutton, 230, 170)
-  love.graphics.draw(levelselectbutton, 340, 170)
+  love.graphics.draw(infobutton, 150, 170)
+  love.graphics.draw(playbutton, 240, 170)
+  love.graphics.draw(levelselectbutton, 330, 170)
+  if Sound.sound then
+    love.graphics.draw(volumebuttonon, 420, 170)
+  else
+    love.graphics.draw(volumebuttonoff, 420, 170)
+  end
   end
 
   if main.gamestate == 2 then
@@ -128,6 +140,8 @@ function draw()
   love.graphics.draw(coin, 550, 15)
   love.graphics.print("x", 595, 20)
   love.graphics.print(main.currentcoins, 620, 20)
+  
+  love.graphics.draw(levelmenubutton, 270, 10)
   end
 
   if main.gamestate == 4 then
@@ -163,7 +177,21 @@ function draw()
   if main.levelstate ~= 5 then
   love.graphics.draw(nextlevelbutton, 500, 180)
   end
-  end 
+  end
+
+
+  if main.gamestate == 5 then
+    love.graphics.draw(blankbg, backgroundQuad, 0, 0)
+    love.graphics.setColor(255, 0, 0, 255)
+    love.graphics.setFont(info)
+    love.graphics.print("Tap the upper half of the screen to jump.", 30, 50)
+    love.graphics.print("Hold the lower half of the screen to slide.", 30, 100)
+    love.graphics.print("Running into sides of platforms will kill you.", 30, 150)
+    love.graphics.print("Jumping into the bottom of them will bounce you", 30, 200)
+    love.graphics.print("to higher levels.", 30, 230)
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.draw(menubutton, 20, 280)
+  end  
 
 end   
 
